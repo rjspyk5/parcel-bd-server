@@ -1,4 +1,3 @@
 import { Router } from "express";
-export const routerEntry=Router();
-
-routerEntry.use("/users",usrRouter)
+export const router = Router();
+router.use("/users", userRouter)
