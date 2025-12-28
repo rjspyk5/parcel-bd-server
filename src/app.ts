@@ -1,13 +1,15 @@
 import express from 'express';
-import { routerEntry } from './routers/index.js';
+import { routeEntry } from './routers/index.js';
+import { notFound } from './shared/utils/notFound.js';
+import { errorHandeler } from './shared/utils/errorHandeler.js';
 export const app = express();
-
 // middleware
 app.use(express.json())
-
-// router
-app.use("/api/v1", routerEntry)
+// health check route
+app.get("/", (req, res) => res.send("Wellcome to parcel bd server"));
+//api routes
+app.use("/api/v1", routeEntry);
+app.use(notFound)
+app.use(errorHandeler);
 // global error handeling
-
-
 
