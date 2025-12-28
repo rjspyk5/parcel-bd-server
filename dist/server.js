@@ -1,6 +1,7 @@
 import http, { Server } from "http";
 import { app } from "./app.js";
 import { config } from "./config/config.js";
+import { connectDB } from "./config/connectDb.js";
 const appbootstrap = async () => {
     let server;
     // shutdown fucntion for stop server
@@ -14,6 +15,7 @@ const appbootstrap = async () => {
         }, 10000);
     };
     try {
+        await connectDB();
         server = http.createServer(app);
         // start server
         server.listen(config.port, () => console.log(`Server is running at ${config.port}`));

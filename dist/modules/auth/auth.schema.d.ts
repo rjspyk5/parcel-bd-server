@@ -1,0 +1,27 @@
+import z from "zod/v3";
+export declare const registerSchema: z.ZodObject<{
+    email: z.ZodString;
+    password: z.ZodString;
+    role: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    email: string;
+    password: string;
+    role: string;
+}, {
+    email: string;
+    password: string;
+    role: string;
+}>;
+export declare const loginSchema: z.ZodObject<{
+    email: z.ZodString;
+    password: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    email: string;
+    password: string;
+}, {
+    email: string;
+    password: string;
+}>;
+export type loginSchemaType = z.infer<typeof loginSchema>;
+export type regSchemaType = z.infer<typeof registerSchema>;
+//# sourceMappingURL=auth.schema.d.ts.map

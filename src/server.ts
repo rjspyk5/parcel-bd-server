@@ -1,7 +1,7 @@
 import http, { Server } from "http";
 import { app } from "./app.js";
 import { config } from "./config/config.js";
-
+import { connectDB } from "./config/connectDb.js";
 const appbootstrap = async () => {
     let server: Server;
     // shutdown fucntion for stop server
@@ -17,6 +17,7 @@ const appbootstrap = async () => {
         }, 10000);
     }
     try {
+        await connectDB();
         server = http.createServer(app);
         // start server
         server.listen(config.port, () => console.log(`Server is running at ${config.port}`));
@@ -25,7 +26,6 @@ const appbootstrap = async () => {
             console.log("er")
             process.exit(1)
         })
-
         // stop server if infinite loop or others unexpected problem
         process.on("SIGTERM", () => shutdown('SIGTERM'));
         process.on("SIGINT", () => shutdown('SIGINT'));
@@ -34,5 +34,4 @@ const appbootstrap = async () => {
         console.log(error)
     }
 }
-
 appbootstrap();
