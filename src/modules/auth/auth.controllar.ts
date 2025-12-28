@@ -1,33 +1,38 @@
 import type { NextFunction, Request, Response } from "express"
+import type { regSchemaType } from "./auth.schema.js";
+import { loginService, registrationService } from "./auth.service.js";
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body ?? {};
-    console.log(email, password)
-
-    if (!email || !password) {
-        return res.status(400).json({
-            success: false,
-            message: "Please provide email and password"
-        })
-    }
-
     try {
-        await fetch('https://jsonplaceholder.typicode.com/tods/1')
-            .then(response => response.json())
-            .then(json => console.log(json))
+        const token = await loginService({ email, password })
+        res.json({
+            success: true,
+            message: "User created successfully",
+            data: token
+        })
     } catch (error: Error | any) {
         next(error)
     }
 
 }
 
-export const register = async (req: Request, res: Response) => {
-    res.send("register")
+export const register = async (req: Request<regSchemaType>, res: Response, next: NextFunction) => {
+    const { email, password, role } = req.body ?? {};
+    try {
+        const user = await registrationService({ email, password, role })
+        return res.json({
+            success: true,
+            message: "User created successfully",
+            data: [user]
+        })
+
+    } catch (error) {
+        next(error)
+    }
 }
 
-export const logout = async (req: Request, res: Response) => {
-    res.send("logout")
-}
+
 
 export const me = async (req: Request, res: Response) => {
     res.send("me")

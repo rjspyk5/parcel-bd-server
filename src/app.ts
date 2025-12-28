@@ -4,6 +4,7 @@ import { notFound } from './shared/utils/notFound.js';
 import { errorHandeler } from './shared/utils/errorHandeler.js';
 export const app = express();
 // middleware
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 // health check route
 app.get("/", (req, res) => res.send("Wellcome to parcel bd server"));
