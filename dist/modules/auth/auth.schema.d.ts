@@ -2,15 +2,18 @@ import z from "zod/v3";
 export declare const registerSchema: z.ZodObject<{
     email: z.ZodString;
     password: z.ZodString;
-    role: z.ZodString;
+    role: z.ZodOptional<z.ZodString>;
+    phone: z.ZodOptional<z.ZodNumber>;
 }, "strip", z.ZodTypeAny, {
     email: string;
     password: string;
-    role: string;
+    role?: string | undefined;
+    phone?: number | undefined;
 }, {
     email: string;
     password: string;
-    role: string;
+    role?: string | undefined;
+    phone?: number | undefined;
 }>;
 export declare const loginSchema: z.ZodObject<{
     email: z.ZodString;

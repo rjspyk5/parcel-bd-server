@@ -1,9 +1,11 @@
 import mongoose, { Schema } from "mongoose";
 import { hashPassword } from "../../shared/utils/bcryptPassword.js";
+import { number } from "zod";
 const userSchema = new Schema({
-    email: { type: String, required: true },
-    password: { type: String, required: true },
-    role: { type: String, required: true }
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true, select: false },
+    role: { type: String, enum: ["admin", "user", "deliveryHero"], required: true },
+    phone: { type: number },
 });
 userSchema.pre("save", async function () {
     if (!this.isModified("password")) {

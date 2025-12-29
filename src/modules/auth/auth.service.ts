@@ -12,9 +12,9 @@ export const registrationService = async (data: regSchemaType) => {
     return email;
 }
 
-
 export const loginService = async (data: loginSchemaType) => {
-    const userExist = await UserModel.findOne({ email: data.email });
+    const userExist = await UserModel.findOne({ email: data.email }).select("+password");
+
     if (!userExist) {
         throw new Error("User does not exist with this email");
     }
@@ -29,3 +29,13 @@ export const loginService = async (data: loginSchemaType) => {
 
     return token
 }
+
+export const userDetailsService = async (email: string) => {
+    console.log(email)
+    const userExist = await UserModel.findOne({ email: email })
+    if (!userExist) {
+        throw new Error("User does not exist with this email");
+    }
+    return userExist
+}
+

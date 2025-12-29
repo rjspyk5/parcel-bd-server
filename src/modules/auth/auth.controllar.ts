@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express"
 import type { regSchemaType } from "./auth.schema.js";
-import { loginService, registrationService } from "./auth.service.js";
+import { loginService, registrationService, userDetailsService } from "./auth.service.js";
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body ?? {};
@@ -34,6 +34,16 @@ export const register = async (req: Request<regSchemaType>, res: Response, next:
 
 
 
-export const me = async (req: Request, res: Response) => {
-    res.send("me")
+export const getUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const mail = req.params.mail
+
+        if (!mail) {
+            return res.status(404).json({ success: false, data: [], message: "Email is required" })
+        }
+        const user = await userDetailsService(mail)
+        return res.json({ success: true, data: user, message: "User found successfully" })
+    } catch (error) {
+        next(error)
+    }
 }

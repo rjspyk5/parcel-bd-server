@@ -10,7 +10,7 @@ export const registrationService = async (data) => {
     return email;
 };
 export const loginService = async (data) => {
-    const userExist = await UserModel.findOne({ email: data.email });
+    const userExist = await UserModel.findOne({ email: data.email }).select("+password");
     if (!userExist) {
         throw new Error("User does not exist with this email");
     }
@@ -20,5 +20,13 @@ export const loginService = async (data) => {
     }
     const token = generateJwtToken(userExist.email);
     return token;
+};
+export const userDetailsService = async (email) => {
+    console.log(email);
+    const userExist = await UserModel.findOne({ email: email });
+    if (!userExist) {
+        throw new Error("User does not exist with this email");
+    }
+    return userExist;
 };
 //# sourceMappingURL=auth.service.js.map
