@@ -17,7 +17,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
 }
 
-export const register = async (req: Request<regSchemaType>, res: Response, next: NextFunction) => {
+export const register = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password, role } = req.body ?? {};
     try {
         const user = await registrationService({ email, password, role })
