@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import { createParcelService } from "./parcel.services.js";
+import { createParcelService, getAllParcelsService } from "./parcel.services.js";
 
 
 export const createParcel = async (req: Request, res: Response, next: NextFunction) => {
@@ -13,9 +13,18 @@ export const createParcel = async (req: Request, res: Response, next: NextFuncti
         return res.json({
             message: "Parcel booked successfully",
             success: true,
-            data:result
+            data: result
         });
 
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const getAllParcels = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const result = await getAllParcelsService()
+        return res.json({ success: true, data: result, message: "Parcels found successfully" })
     } catch (error) {
         next(error)
     }
