@@ -5,7 +5,7 @@ export const login = async (req, res, next) => {
         const token = await loginService({ email, password });
         res.json({
             success: true,
-            message: "User created successfully",
+            message: "Login successfully",
             data: token
         });
     }

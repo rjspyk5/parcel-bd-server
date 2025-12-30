@@ -36,7 +36,7 @@ const ParcelSchema = new Schema(
             default: "Pending",
         },
 
-        assignedAgent: { type: Types.ObjectId, ref: "User", default: null,index:true },
+        assignedAgent: { type: Types.ObjectId, ref: "User", default: null, index: true },
     },
     { timestamps: true }
 );
